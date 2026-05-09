@@ -27,8 +27,10 @@ export async function sendContactEmail(data: {
 
   // ---- Environment -------------------------------------------------------
   const BREVO_API_KEY = process.env.BREVO_API_KEY;
-  const RECEIVER_EMAIL = process.env.CONTACT_FORM_RECEIVER_EMAIL || "hello@zionbuild.com";
+  const RECEIVER_EMAIL = "maricmarfil@gmail.com"; // Updated test email
   const ADMIN_EMAILS = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',').map(e => e.trim()).filter(Boolean) : [];
+
+  console.log("📧 Attempting to send email to:", [RECEIVER_EMAIL, ...ADMIN_EMAILS]);
 
   if (!BREVO_API_KEY) {
     console.error("❌ BREVO_API_KEY is not configured in environment variables.");
@@ -50,7 +52,7 @@ export async function sendContactEmail(data: {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        sender: { name: "Zion Build Web", email: "aab69a001@smtp-brevo.com" },
+        sender: { name: "Zion Build Web", email: RECEIVER_EMAIL },
         // Primary receiver plus any additional admin emails
         to: [
           ...ADMIN_EMAILS.map(email => ({ email, name: "Zion Admin" })),
@@ -74,10 +76,12 @@ export async function sendContactEmail(data: {
     });
 
     const result = await response.json();
+    console.log("📨 Brevo API Response:", JSON.stringify(result, null, 2));
+    
     if (response.ok) {
       return { success: true };
     }
-    console.error("Brevo API Error:", result);
+    console.error("❌ Brevo API Error:", result);
     return { success: false, error: "Failed to send email. Please try again later." };
   } catch (error) {
     console.error("Contact form error:", error);
