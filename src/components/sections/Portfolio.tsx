@@ -65,7 +65,7 @@ export function Portfolio() {
             <span className="w-6 h-[1.5px] bg-gold rounded-sm" />
             Our Work
           </div>
-          <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-bold text-white leading-[1.15] mb-4">
+          <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-semibold text-white leading-[1.15] mb-4">
             Projects Built on Purpose
           </h2>
           <p className="text-[1rem] leading-[1.7] text-gray-400 font-light max-w-[560px]">
@@ -92,7 +92,7 @@ export function Portfolio() {
               )}>
                 <div className="absolute inset-0 bg-linear-to-br from-gray-850 to-gray-800 flex items-center justify-center">
                   <div className="absolute inset-0 opacity-[0.04] bg-[repeating-linear-gradient(45deg,var(--color-gold)_0,var(--color-gold)_1px,transparent_0,transparent_50%)] bg-[length:18px_18px]" />
-                  <span className="font-display text-[3.2rem] font-bold text-gold/12 tracking-wider z-10 group-hover:text-gold/20 transition-colors">
+                  <span className="font-display text-[3.2rem] font-semibold text-gold/12 tracking-wider z-10 group-hover:text-gold/20 transition-colors">
                     {project.monogram}
                   </span>
                 </div>
@@ -105,7 +105,7 @@ export function Portfolio() {
                     </span>
                   ))}
                 </div>
-                <h3 className="font-display text-[1.25rem] font-bold text-white mb-2">{project.title}</h3>
+                <h3 className="font-display text-[1.25rem] font-semibold text-white mb-2">{project.title}</h3>
                 <p className="text-[0.85rem] leading-[1.65] text-gray-400 font-light">{project.desc}</p>
                 {project.link && (
                   <a

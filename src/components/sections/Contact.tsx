@@ -61,7 +61,7 @@ export function Contact() {
             <span className="w-6 h-[1.5px] bg-gold rounded-sm" />
             Get In Touch
           </div>
-          <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-bold text-white leading-[1.15] mb-4">
+          <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-semibold text-white leading-[1.15] mb-4">
             Start a Conversation
           </h2>
           <p className="text-[1rem] leading-[1.7] text-gray-400 font-light max-w-[560px] mx-auto">

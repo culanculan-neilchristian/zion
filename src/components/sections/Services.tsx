@@ -52,7 +52,7 @@ export function Services() {
             <span className="w-6 h-[1.5px] bg-gold rounded-sm" />
             What We Do
           </div>
-          <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-bold text-white leading-[1.15] mb-4">
+          <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-semibold text-white leading-[1.15] mb-4">
             Technology That Serves the Mission
           </h2>
           <p className="text-[1rem] leading-[1.7] text-gray-400 font-light max-w-[560px] mx-auto">
@@ -74,7 +74,7 @@ export function Services() {
               <div className="w-11 h-11 bg-gold/12 border border-solid border-gold/15 rounded-lg flex items-center justify-center mb-5.5">
                 <svc.icon size={20} className="text-gold" />
               </div>
-              <h3 className="font-display text-[1.2rem] font-bold text-white mb-2.5">
+              <h3 className="font-display text-[1.2rem] font-semibold text-white mb-2.5">
                 {svc.title}
               </h3>
               <p className="text-[0.87rem] leading-[1.65] text-gray-400 font-light">

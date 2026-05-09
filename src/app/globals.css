@@ -19,7 +19,7 @@
   --color-gray-200: #D5D5E4;
   --color-gray-100: #EDEDF4;
 
-  --font-display: var(--font-cormorant);
+  --font-display: "Cormorant Garamond", serif;
   --font-body: var(--font-outfit);
   --font-mono: var(--font-jetbrains);
 
@@ -49,14 +49,22 @@
   --gold-glow: rgba(205, 162, 70, 0.12);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --nav-height: 72px;
+  
+  /* Fallback to ensure font is available before Next.js hydration */
+  --font-display: "Cormorant Garamond", serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
+  font-feature-settings: "kern" 1, "liga" 1;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display) !important;
 }
 
 /* Custom Utilities for Glassmorphism and Effects */
@@ -77,4 +85,7 @@ body {
 
 .divider-gradient {
   background: linear-gradient(90deg, transparent, var(--color-gray-750), transparent);
+}
+.garamond {
+  font-family: "Cormorant Garamond", var(--font-cormorant), serif;
 }

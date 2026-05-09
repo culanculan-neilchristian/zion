@@ -46,7 +46,7 @@ export function ZPL() {
               <span className="w-6 h-[1.5px] bg-gold rounded-sm" />
               Our Signature Process
             </div>
-            <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-bold text-white leading-[1.15] mb-4">
+            <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-semibold text-white leading-[1.15] mb-4">
               The Zion Production Line&trade;
             </h2>
             <p className="text-[1rem] leading-[1.7] text-gray-400 font-light max-w-[560px] mb-8">
@@ -73,7 +73,7 @@ export function ZPL() {
                   transition={{ duration: 0.65, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="text-center py-5 px-3 bg-gray-850 border border-solid border-gray-800 rounded-xl hover:border-gold/20 transition-colors"
                 >
-                  <div className="font-display text-[2rem] font-bold text-gold leading-none">{m.val}</div>
+                  <div className="font-display text-[2rem] font-semibold text-gold leading-none">{m.val}</div>
                   <div className="text-[0.68rem] font-medium text-gray-500 uppercase tracking-wider mt-1.5">{m.label}</div>
                 </motion.div>
               ))}
@@ -90,7 +90,7 @@ export function ZPL() {
                 transition={{ duration: 0.65, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="group flex gap-4.5 p-5.5 bg-gray-850 border border-solid border-gray-800 rounded-xl transition-all duration-350 ease-out-expo hover:border-gold/20 hover:bg-gold/4 hover:translate-x-1"
               >
-                <div className="font-display text-[1.8rem] font-bold text-gold leading-none shrink-0 w-[30px] opacity-70 group-hover:opacity-100 transition-opacity">
+                <div className="font-display text-[1.8rem] font-semibold text-gold leading-none shrink-0 w-[30px] opacity-70 group-hover:opacity-100 transition-opacity">
                   {phase.num}
                 </div>
                 <div>

@@ -43,7 +43,7 @@ export function About() {
               <span className="w-6 h-[1.5px] bg-gold rounded-sm" />
               Who We Are
             </div>
-            <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-bold text-white leading-[1.15] mb-4">
+            <h2 className="font-display text-[clamp(2.2rem,4vw,3rem)] font-semibold text-white leading-[1.15] mb-4">
               Driven by Values, Guided by Vision.
             </h2>
             <p className="text-[1rem] leading-[1.7] text-gray-400 font-light mb-8">
@@ -62,7 +62,7 @@ export function About() {
 
           <div className="flex flex-col gap-10">
             <div>
-              <h3 className="font-display text-[1.3rem] font-bold text-white mb-1.5">Our Core Values</h3>
+              <h3 className="font-display text-[1.3rem] font-semibold text-white mb-1.5">Our Core Values</h3>
               <p className="text-[0.88rem] text-gray-400 font-light mb-6">The non-negotiables that guide every line of code we write.</p>
               <div className="flex flex-col gap-5">
                 {VALUES.map((value, idx) => (

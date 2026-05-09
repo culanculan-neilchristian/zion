@@ -34,8 +34,8 @@ export function Hero() {
             <span className="w-[7px] h-[7px] bg-gold rounded-full animate-blink" />
             Kingdom-Driven Technology
           </div>
-          <h1 className="font-display text-[clamp(2.5rem,5.5vw,4.5rem)] font-bold leading-[1.08] text-white mb-7">
-            Building <em className="italic text-gold not-italic">Frameworks</em> for a Higher Purpose.
+          <h1 className="font-display text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[1.08] text-white mb-7">
+            Building <em className="italic text-gold">Frameworks</em> for a Higher Purpose.
           </h1>
           <p className="text-[1.05rem] leading-[1.75] text-gray-400 font-light max-w-[500px] mb-10">
             IT development and servicing for organizations building awesome things for the Kingdom. Our production-grade systems and processes ensure your technology serves the mission it was made for.
@@ -54,7 +54,7 @@ export function Hero() {
             </div>
             <div className="flex flex-wrap gap-10 items-center">
               {["Jesus.Net Philippines", "Turn Vertical", "HopeBegins", "eSTAR Foundation", "Glassbox PH"].map((logo) => (
-                <span key={logo} className="font-display text-[1.05rem] font-semibold text-gray-600 tracking-tight hover:text-gray-400 transition-colors">
+                <span key={logo} className="font-display text-[1.05rem] font-medium text-gray-600 tracking-tight hover:text-gray-400 transition-colors">
                   {logo}
                 </span>
               ))}

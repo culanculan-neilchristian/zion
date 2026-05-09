@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit, JetBrains_Mono } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -32,8 +26,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet" />
+      </head>
       <body
-        className={`${cormorant.variable} ${outfit.variable} ${jetbrains.variable} antialiased selection:bg-gold/30 selection:text-white`}
+        className={`${outfit.variable} ${jetbrains.variable} antialiased selection:bg-gold/30 selection:text-white`}
       >
         {children}
       </body>
