@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zion Systems and Build — Frameworks for a Higher Purpose</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #CDA246;
+  --gold-light: #E2BE6A;
+  --gold-pale: #F0D68A;
+  --gold-dark: #A8832E;
+  --gold-glow: rgba(205, 162, 70, 0.12);
+  --gold-glow-strong: rgba(205, 162, 70, 0.25);
+  --gray-950: #111115;
+  --gray-900: #18181D;
+  --gray-850: #1E1E24;
+  --gray-800: #26262E;
+  --gray-750: #2E2E38;
+  --gray-700: #3A3A46;
+  --gray-600: #55556A;
+  --gray-500: #72728A;
+  --gray-400: #9898B0;
+  --gray-300: #B8B8CC;
+  --gray-200: #D5D5E4;
+  --gray-100: #EDEDF4;
+  --white: #FAFAFE;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --nav-height: 72px;
+  --container: 1180px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+body {
+  font-family: var(--font-body);
+  background: var(--gray-950);
+  color: var(--gray-300);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: rgba(205,162,70,0.3); color: var(--white); }
+.container { max-width: var(--container); margin: 0 auto; width: 100%; }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-height);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+  background: rgba(17,17,21,0.6);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border-bottom: 1px solid rgba(205,162,70,0.06);
+  transition: all 0.5s var(--ease-out-expo);
+}
+.nav.scrolled {
+  background: rgba(17,17,21,0.92);
+  border-bottom-color: rgba(205,162,70,0.12);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+.logo {
+  display: flex; align-items: center; gap: 0.85rem;
+  cursor: pointer; text-decoration: none;
+  transition: opacity 0.3s;
+}
+.logo:hover { opacity: 0.85; }
+.logo svg { width: 40px; height: 40px; flex-shrink: 0; }
+.logo-wordmark { display: flex; flex-direction: column; line-height: 1; }
+.logo-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--white); letter-spacing: 0.01em;
+}
+.logo-name span { color: var(--gold); }
+.logo-tagline {
+  font-size: 0.6rem; font-weight: 400;
+  color: var(--gray-500);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.nav-links { display: flex; align-items: center; gap: 0; }
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1.15rem;
+  font-size: 0.78rem; font-weight: 500;
+  color: var(--gray-400); text-decoration: none;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: color 0.3s; cursor: pointer;
+}
+.nav-link::after {
+  content: '';
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 0; height: 1.5px; background: var(--gold);
+  transition: width 0.3s var(--ease-out-expo);
+}
+.nav-link:hover { color: var(--gray-100); }
+.nav-link.active { color: var(--gold); }
+.nav-link.active::after { width: 18px; }
+.nav-cta-btn {
+  margin-left: 1rem;
+  padding: 0.55rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--gray-950); background: var(--gold);
+  border: none; border-radius: 6px; cursor: pointer;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s var(--ease-out-expo);
+}
+.nav-cta-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(205,162,70,0.3);
+}
+.hamburger {
+  display: none; width: 32px; height: 32px;
+  position: relative; cursor: pointer;
+  background: none; border: none;
+}
+.hamburger span {
+  position: absolute; left: 4px;
+  width: 24px; height: 1.5px;
+  background: var(--gray-300);
+  transition: all 0.4s var(--ease-out-expo);
+}
+.hamburger span:nth-child(1) { top: 10px; }
+.hamburger span:nth-child(2) { top: 16px; }
+.hamburger span:nth-child(3) { top: 22px; }
+.hamburger.open span:nth-child(1) { top: 16px; transform: rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: translateX(-8px); }
+.hamburger.open span:nth-child(3) { top: 16px; transform: rotate(-45deg); }
+.mobile-menu {
+  position: fixed; top: var(--nav-height); left: 0; right: 0; bottom: 0;
+  background: rgba(17,17,21,0.97);
+  backdrop-filter: blur(30px); z-index: 999;
+  flex-direction: column; padding: 2rem;
+  display: flex;
+  opacity: 0; pointer-events: none;
+  transform: translateY(-10px);
+  transition: all 0.4s var(--ease-out-expo);
+}
+.mobile-menu.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.mobile-menu a {
+  display: block; padding: 1.1rem 0;
+  font-size: 1.1rem; font-weight: 500;
+  color: var(--gray-400); text-decoration: none;
+  border-bottom: 1px solid var(--gray-800);
+  cursor: pointer; transition: color 0.3s;
+}
+.mobile-menu a:hover, .mobile-menu a.active { color: var(--gold); }
+.mobile-menu .mobile-cta {
+  margin-top: 1.5rem; text-align: center;
+  padding: 1rem; background: var(--gold);
+  color: var(--gray-950); font-weight: 600;
+  border-radius: 8px; border-bottom: none;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: calc(var(--nav-height) + 3rem) clamp(1.5rem, 4vw, 3rem) 4rem;
+  position: relative; overflow: hidden;
+}
+.hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero-bg-orb { position: absolute; border-radius: 50%; filter: blur(100px); }
+.hero-bg-orb-1 {
+  top: -10%; right: -5%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(205,162,70,0.07) 0%, transparent 70%);
+}
+.hero-bg-orb-2 {
+  bottom: -20%; left: -10%; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(205,162,70,0.04) 0%, transparent 70%);
+}
+.hero-grid-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(205,162,70,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(205,162,70,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, black 20%, transparent 70%);
+}
+.hero-inner {
+  max-width: var(--container); margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(2rem, 5vw, 5rem); align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.35rem 1rem 0.35rem 0.65rem;
+  background: var(--gold-glow); border: 1px solid rgba(205,162,70,0.18);
+  border-radius: 100px; font-size: 0.7rem; font-weight: 600;
+  color: var(--gold-light); letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 2rem; animation: fadeUp 0.7s var(--ease-out-expo) both;
+}
+.eyebrow-dot {
+  width: 7px; height: 7px; background: var(--gold);
+  border-radius: 50%; animation: blink 2.5s ease infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 4.5rem);
+  font-weight: 700; line-height: 1.08; color: var(--white);
+  margin-bottom: 1.75rem; animation: fadeUp 0.7s var(--ease-out-expo) 0.08s both;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 1.05rem; line-height: 1.75;
+  color: var(--gray-400); font-weight: 300;
+  max-width: 500px; margin-bottom: 2.5rem;
+  animation: fadeUp 0.7s var(--ease-out-expo) 0.16s both;
+}
+.hero-btns {
+  display: flex; gap: 0.85rem; flex-wrap: wrap;
+  animation: fadeUp 0.7s var(--ease-out-expo) 0.24s both;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 2rem; font-family: var(--font-body);
+  font-size: 0.88rem; font-weight: 600;
+  border-radius: 8px; border: none; cursor: pointer;
+  letter-spacing: 0.02em; transition: all 0.35s var(--ease-out-expo);
+  text-decoration: none;
+}
+.btn-gold { background: var(--gold); color: var(--gray-950); }
+.btn-gold:hover {
+  background: var(--gold-light); transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(205,162,70,0.35);
+}
+.btn-ghost { background: transparent; color: var(--gray-300); border: 1.5px solid var(--gray-700); }
+.btn-ghost:hover { border-color: var(--gray-500); color: var(--white); transform: translateY(-1px); }
+.btn svg { width: 16px; height: 16px; }
+.hero-visual { animation: fadeUp 0.7s var(--ease-out-expo) 0.32s both; }
+.terminal {
+  background: var(--gray-900); border: 1px solid var(--gray-750);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 12px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+.terminal-bar {
+  display: flex; align-items: center; gap: 7px;
+  padding: 14px 18px; background: var(--gray-850);
+  border-bottom: 1px solid var(--gray-750);
+}
+.terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
+.terminal-dot.r { background: #FF5F57; }
+.terminal-dot.y { background: #FEBC2E; }
+.terminal-dot.g { background: #28C840; }
+.terminal-title {
+  margin-left: auto; font-family: var(--font-mono);
+  font-size: 0.65rem; color: var(--gray-600); letter-spacing: 0.05em;
+}
+.terminal-body { padding: 1.5rem; }
+.pipe-row {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 0.7rem 0.85rem; border-radius: 8px;
+  margin-bottom: 0.45rem; border: 1px solid transparent;
+  transition: all 0.3s;
+}
+.pipe-row:hover { background: rgba(205,162,70,0.05); border-color: rgba(205,162,70,0.1); }
+.pipe-num {
+  width: 26px; height: 26px; flex-shrink: 0;
+  background: var(--gold); color: var(--gray-950);
+  border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+}
+.pipe-label { font-size: 0.82rem; color: var(--gray-300); font-weight: 500; flex: 1; }
+.pipe-status {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  padding: 0.2rem 0.55rem; border-radius: 4px;
+}
+.pipe-done { color: #34D399; background: rgba(52,211,153,0.1); }
+.pipe-active { color: var(--gold-light); background: rgba(205,162,70,0.12); }
+.pipe-queued { color: var(--gray-600); background: rgba(90,90,110,0.1); }
+.pipe-connector { width: 1.5px; height: 10px; background: var(--gray-750); margin: 0 0 0 12px; border-radius: 1px; }
+.hero-social-proof {
+  margin-top: 3.5rem; padding-top: 2rem;
+  border-top: 1px solid var(--gray-800);
+  animation: fadeUp 0.7s var(--ease-out-expo) 0.4s both;
+}
+.hero-social-label {
+  font-size: 0.68rem; font-weight: 500; color: var(--gray-600);
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1rem;
+}
+.hero-logos { display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; }
+.hero-logos span {
+  font-family: var(--font-display); font-size: 1.05rem; font-weight: 600;
+  color: var(--gray-600); letter-spacing: 0.02em; transition: color 0.3s;
+}
+.hero-logos span:hover { color: var(--gray-400); }
+
+/* ── SECTIONS SHARED ── */
+section { padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3rem); }
+.section-eyebrow {
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
+  color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.6rem;
+}
+.section-eyebrow::before { content: ''; width: 24px; height: 1.5px; background: var(--gold); border-radius: 1px; }
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 1rem;
+}
+.section-sub { font-size: 1rem; line-height: 1.7; color: var(--gray-400); max-width: 560px; font-weight: 300; }
+.section-header-center { text-align: center; }
+.section-header-center .section-sub { margin: 0 auto; }
+.section-header-center .section-eyebrow { justify-content: center; }
+.divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--gray-750), transparent); }
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.65s var(--ease-out-expo), transform 0.65s var(--ease-out-expo);
+}
+.reveal.vis { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.08s; }
+.reveal-d2 { transition-delay: 0.16s; }
+.reveal-d3 { transition-delay: 0.24s; }
+.reveal-d4 { transition-delay: 0.32s; }
+.reveal-d5 { transition-delay: 0.40s; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── SERVICES ── */
+#services { background: var(--gray-950); }
+.services-header { margin-bottom: 3.5rem; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.svc {
+  padding: 2rem; background: var(--gray-900);
+  border: 1px solid var(--gray-800); border-radius: 12px;
+  transition: all 0.4s var(--ease-out-expo); position: relative; overflow: hidden;
+}
+.svc::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease-out-expo);
+}
+.svc:hover::before { transform: scaleX(1); }
+.svc:hover { border-color: rgba(205,162,70,0.2); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.2); }
+.svc-icon {
+  width: 44px; height: 44px; background: var(--gold-glow);
+  border: 1px solid rgba(205,162,70,0.15); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; margin-bottom: 1.4rem;
+}
+.svc-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.svc h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; }
+.svc p { font-size: 0.87rem; line-height: 1.65; color: var(--gray-400); font-weight: 300; }
+
+/* ── ZPL ── */
+#zpl { background: var(--gray-900); }
+.zpl-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.zpl-left .section-sub { margin-bottom: 2rem; }
+.zpl-highlight {
+  padding: 1.5rem; background: rgba(205,162,70,0.05);
+  border: 1px solid rgba(205,162,70,0.12); border-radius: 10px; margin-bottom: 2rem;
+}
+.zpl-highlight p { font-size: 0.9rem; line-height: 1.7; color: var(--gray-300); font-weight: 400; }
+.zpl-highlight strong { color: var(--gold); font-weight: 600; }
+.zpl-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+.metric {
+  text-align: center; padding: 1.2rem 0.75rem;
+  background: var(--gray-850); border: 1px solid var(--gray-800);
+  border-radius: 10px; transition: border-color 0.3s;
+}
+.metric:hover { border-color: rgba(205,162,70,0.2); }
+.metric-val { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+.metric-label { font-size: 0.68rem; font-weight: 500; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.4rem; }
+.zpl-phases { display: flex; flex-direction: column; gap: 0.85rem; }
+.phase {
+  display: flex; gap: 1.1rem; padding: 1.35rem 1.4rem;
+  background: var(--gray-850); border: 1px solid var(--gray-800);
+  border-radius: 10px; transition: all 0.35s var(--ease-out-expo); cursor: default;
+}
+.phase:hover { border-color: rgba(205,162,70,0.2); background: rgba(205,162,70,0.04); transform: translateX(4px); }
+.phase-num {
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 700;
+  color: var(--gold); line-height: 1; flex-shrink: 0; width: 30px; opacity: 0.7;
+}
+.phase:hover .phase-num { opacity: 1; }
+.phase h4 { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+.phase p { font-size: 0.82rem; line-height: 1.6; color: var(--gray-400); font-weight: 300; }
+
+/* ── PORTFOLIO ── */
+#portfolio { background: var(--gray-950); }
+.portfolio-header { margin-bottom: 3rem; }
+.portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+.folio {
+  background: var(--gray-900); border: 1px solid var(--gray-800);
+  border-radius: 12px; overflow: hidden; transition: all 0.4s var(--ease-out-expo);
+}
+.folio:hover { border-color: rgba(205,162,70,0.2); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.25); }
+.folio.featured { grid-column: 1 / -1; }
+.folio-thumb { height: 200px; position: relative; overflow: hidden; }
+.folio.featured .folio-thumb { height: 260px; }
+.folio-thumb-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+.folio:nth-child(1) .folio-thumb-inner { background: linear-gradient(135deg, var(--gray-850), var(--gray-800)); }
+.folio:nth-child(2) .folio-thumb-inner { background: linear-gradient(135deg, #1c1c28, var(--gray-850)); }
+.folio:nth-child(3) .folio-thumb-inner { background: linear-gradient(135deg, var(--gray-800), #222230); }
+.folio:nth-child(4) .folio-thumb-inner { background: linear-gradient(135deg, #201f28, var(--gray-850)); }
+.folio:nth-child(5) .folio-thumb-inner { background: linear-gradient(135deg, #1e1e2a, var(--gray-800)); }
+.folio:nth-child(6) .folio-thumb-inner { background: linear-gradient(135deg, var(--gray-850), #24242e); }
+.folio-thumb-pattern {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+  background-size: 18px 18px;
+}
+.folio-monogram {
+  font-family: var(--font-display); font-size: 3.2rem; font-weight: 700;
+  color: rgba(205,162,70,0.12); letter-spacing: 0.05em; z-index: 1; transition: color 0.3s;
+}
+.folio:hover .folio-monogram { color: rgba(205,162,70,0.2); }
+.folio-body { padding: 1.75rem; }
+.folio-tags { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 0.85rem; }
+.tag {
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500;
+  padding: 0.22rem 0.65rem; background: rgba(205,162,70,0.08);
+  color: var(--gold); border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.folio h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+.folio p { font-size: 0.85rem; line-height: 1.65; color: var(--gray-400); font-weight: 300; }
+.folio-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  margin-top: 0.85rem;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--gold); text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: gap 0.3s var(--ease-out-expo), color 0.3s;
+}
+.folio-link:hover { color: var(--gold-light); gap: 0.65rem; }
+.folio-link svg { width: 14px; height: 14px; }
+
+/* ── ABOUT ── */
+#about { background: var(--gray-900); }
+.about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.about-left .section-sub { margin-bottom: 1rem; }
+.about-quote {
+  margin-top: 2.5rem; padding: 1.75rem 2rem;
+  background: rgba(205,162,70,0.04);
+  border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0;
+}
+.about-quote p { font-family: var(--font-display); font-size: 1.15rem; font-style: italic; color: var(--gray-200); line-height: 1.55; }
+.about-quote cite { display: block; margin-top: 0.65rem; font-family: var(--font-body); font-style: normal; font-size: 0.78rem; color: var(--gold); font-weight: 500; }
+.values-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+.values-sub { font-size: 0.88rem; color: var(--gray-400); font-weight: 300; margin-bottom: 1.5rem; }
+.values-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.value-item { display: flex; gap: 1rem; }
+.value-icon {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: var(--gold-glow); border: 1px solid rgba(205,162,70,0.12);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+}
+.value-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.value-item h4 { font-size: 0.92rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem; }
+.value-item p { font-size: 0.82rem; line-height: 1.6; color: var(--gray-400); font-weight: 300; }
+
+/* ── CONTACT ── */
+#contact { background: var(--gray-950); }
+.contact-header { margin-bottom: 3rem; }
+.contact-layout { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 2.5rem; }
+.contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+.c-item { display: flex; gap: 0.9rem; align-items: flex-start; }
+.c-item-icon {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: var(--gold-glow); border: 1px solid rgba(205,162,70,0.12);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+}
+.c-item-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+.c-item h4 { font-size: 0.82rem; font-weight: 600; color: var(--white); margin-bottom: 0.15rem; }
+.c-item p { font-size: 0.85rem; color: var(--gray-400); font-weight: 300; }
+.c-note {
+  padding: 1.25rem; background: rgba(205,162,70,0.04);
+  border: 1px solid rgba(205,162,70,0.1); border-radius: 10px; margin-top: 0.5rem;
+}
+.c-note p { font-size: 0.82rem; color: var(--gray-400); line-height: 1.6; font-weight: 300; }
+.c-note strong { color: var(--gold); font-weight: 600; }
+.contact-form { display: flex; flex-direction: column; gap: 0.9rem; }
+.form-row { display: flex; gap: 0.9rem; }
+.fg { flex: 1; display: flex; flex-direction: column; gap: 0.35rem; }
+.fg label { font-size: 0.72rem; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.08em; }
+.fg input, .fg textarea, .fg select {
+  padding: 0.8rem 1rem; background: var(--gray-900);
+  border: 1px solid var(--gray-800); border-radius: 8px;
+  color: var(--white); font-family: var(--font-body);
+  font-size: 0.88rem; font-weight: 400; outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(205,162,70,0.1); }
+.fg input::placeholder, .fg textarea::placeholder { color: var(--gray-600); }
+.fg textarea { resize: vertical; min-height: 110px; }
+.fg select { cursor: pointer; }
+.fg select option { background: var(--gray-900); color: var(--gray-300); }
+.form-submit {
+  align-self: flex-start; padding: 0.85rem 2.2rem;
+  background: var(--gold); color: var(--gray-950);
+  font-family: var(--font-body); font-size: 0.88rem; font-weight: 600;
+  border: none; border-radius: 8px; cursor: pointer;
+  letter-spacing: 0.02em; transition: all 0.35s var(--ease-out-expo); margin-top: 0.25rem;
+}
+.form-submit:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(205,162,70,0.3); }
+
+/* ── EXEC OFFER BANNER ── */
+.exec-offer {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height 0.6s var(--ease-out-expo), opacity 0.5s ease, margin 0.4s ease;
+  margin: 0;
+}
+.exec-offer.show {
+  max-height: 400px; opacity: 1; margin: 0.25rem 0;
+}
+.exec-offer-inner {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(205,162,70,0.08) 0%, rgba(205,162,70,0.03) 100%);
+  border: 1px solid rgba(205,162,70,0.2);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.exec-offer-inner::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+}
+.exec-offer-badge {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  background: var(--gold);
+  color: var(--gray-950);
+  font-family: var(--font-mono);
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.12em;
+  border-radius: 4px;
+  margin-bottom: 0.85rem;
+}
+.exec-offer-content h4 {
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.exec-offer-content p {
+  font-size: 0.84rem; line-height: 1.65;
+  color: var(--gray-400); font-weight: 300;
+}
+.exec-offer-content strong { color: var(--gold-light); font-weight: 600; }
+.exec-offer-price {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--gold);
+  text-decoration: line-through;
+  text-decoration-color: rgba(205,162,70,0.5);
+}
+.exec-offer-check {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-top: 1rem;
+  font-size: 0.84rem; font-weight: 500;
+  color: var(--gold-light);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.exec-offer-check:hover { color: var(--gold-pale); }
+.exec-offer-check input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 3rem clamp(1.5rem, 4vw, 3rem);
+  border-top: 1px solid var(--gray-850);
+}
+.footer-inner {
+  max-width: var(--container); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-left { display: flex; align-items: center; gap: 0.75rem; }
+.footer-left svg { width: 28px; height: 28px; }
+.footer-brand { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--gray-400); }
+.footer-brand span { color: var(--gold-dark); }
+.footer-center { display: flex; gap: 2rem; }
+.footer-center a {
+  font-size: 0.75rem; font-weight: 500; color: var(--gray-500);
+  text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
+  transition: color 0.3s; cursor: pointer;
+}
+.footer-center a:hover { color: var(--gold); }
+.footer-right { font-size: 0.72rem; color: var(--gray-600); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .hamburger { display: block; }
+  .hero-inner, .zpl-layout, .about-layout, .contact-layout { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .folio.featured { grid-column: auto; }
+  .form-row { flex-direction: column; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-center { justify-content: center; }
+}
+@media (max-width: 600px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .zpl-metrics { grid-template-columns: repeat(3, 1fr); }
+  .hero-logos { gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a class="logo" data-scroll="hero">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1.5" y="1.5" width="37" height="37" rx="8" stroke="#CDA246" stroke-width="1.5" fill="none"/>
+      <rect x="4" y="4" width="32" height="32" rx="6" fill="rgba(205,162,70,0.06)"/>
+      <path d="M12 28L20 10L28 28" stroke="#CDA246" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <line x1="14.5" y1="23" x2="25.5" y2="23" stroke="#CDA246" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="20" cy="9" r="1.5" fill="#CDA246"/>
+    </svg>
+    <div class="logo-wordmark">
+      <div class="logo-name">Zion <span>Systems &amp; Build</span></div>
+      <div class="logo-tagline">Frameworks for a Higher Purpose</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link active" data-scroll="hero">Home</a>
+    <a class="nav-link" data-scroll="services">Services</a>
+    <a class="nav-link" data-scroll="zpl">ZPL</a>
+    <a class="nav-link" data-scroll="portfolio">Portfolio</a>
+    <a class="nav-link" data-scroll="about">About</a>
+    <a class="nav-cta-btn" data-scroll="contact">Get in Touch</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a data-scroll="hero" class="active">Home</a>
+  <a data-scroll="services">Services</a>
+  <a data-scroll="zpl">ZPL</a>
+  <a data-scroll="portfolio">Portfolio</a>
+  <a data-scroll="about">About</a>
+  <a data-scroll="contact" class="mobile-cta">Get in Touch</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-orb hero-bg-orb-1"></div>
+    <div class="hero-bg-orb hero-bg-orb-2"></div>
+    <div class="hero-grid-pattern"></div>
+  </div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><span class="eyebrow-dot"></span> Kingdom-Driven Technology</div>
+      <h1>Building <em>Frameworks</em> for a Higher Purpose.</h1>
+      <p class="hero-sub">IT development and servicing for organizations building awesome things for the Kingdom. Our production-grade systems and processes ensure your technology serves the mission it was made for.</p>
+      <div class="hero-btns">
+        <button class="btn btn-gold" data-scroll="zpl">Explore Our Process <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="btn btn-ghost" data-scroll="contact">Start a Conversation</button>
+      </div>
+      <div class="hero-social-proof">
+        <div class="hero-social-label">Trusted by Kingdom organizations</div>
+        <div class="hero-logos">
+          <span>Jesus.Net Philippines</span>
+          <span>Turn Vertical</span>
+          <span>HopeBegins</span>
+          <span>eSTAR Foundation</span>
+          <span>Glassbox PH</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div>
+          <div class="terminal-dot y"></div>
+          <div class="terminal-dot g"></div>
+          <span class="terminal-title">zion-production-line.sys</span>
+        </div>
+        <div class="terminal-body">
+          <div class="pipe-row"><div class="pipe-num">01</div><span class="pipe-label">Discover &amp; Define</span><span class="pipe-status pipe-done">&#10003; done</span></div>
+          <div class="pipe-connector"></div>
+          <div class="pipe-row"><div class="pipe-num">02</div><span class="pipe-label">Architect &amp; Blueprint</span><span class="pipe-status pipe-done">&#10003; done</span></div>
+          <div class="pipe-connector"></div>
+          <div class="pipe-row"><div class="pipe-num">03</div><span class="pipe-label">Build &amp; Iterate</span><span class="pipe-status pipe-active">&#9654; active</span></div>
+          <div class="pipe-connector"></div>
+          <div class="pipe-row"><div class="pipe-num">04</div><span class="pipe-label">Test &amp; Refine</span><span class="pipe-status pipe-queued">— queued</span></div>
+          <div class="pipe-connector"></div>
+          <div class="pipe-row"><div class="pipe-num">05</div><span class="pipe-label">Launch &amp; Sustain</span><span class="pipe-status pipe-queued">— queued</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-header section-header-center reveal">
+      <div class="section-eyebrow">What We Do</div>
+      <h2 class="section-heading">Technology That Serves the Mission</h2>
+      <p class="section-sub">From concept to deployment and beyond — we build, maintain, and scale the systems that power Kingdom-oriented organizations.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc reveal"><div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-5"/></svg></div><h3>Custom Software</h3><p>Web apps, mobile platforms, and enterprise systems designed from the ground up for mission-driven organizations.</p></div>
+      <div class="svc reveal reveal-d1"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M4 19h16M4 15h16M4 11h16M4 7h16"/><circle cx="7" cy="19" r="1"/><circle cx="12" cy="15" r="1"/><circle cx="17" cy="11" r="1"/></svg></div><h3>Infrastructure &amp; DevOps</h3><p>Cloud architecture, CI/CD pipelines, and scalable infrastructure to keep your operations running securely.</p></div>
+      <div class="svc reveal reveal-d2"><div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><h3>Technology Consulting</h3><p>Strategic guidance on tech decisions, digital transformation roadmaps, and system audits aligned to your vision.</p></div>
+      <div class="svc reveal reveal-d3"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Managed IT Services</h3><p>Ongoing support, maintenance, and monitoring so your team stays focused on the mission while we handle the tech.</p></div>
+      <div class="svc reveal reveal-d4"><div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div><h3>UI/UX &amp; Product Design</h3><p>User-centered design that makes complex systems intuitive — from wireframes to high-fidelity prototypes.</p></div>
+      <div class="svc reveal reveal-d5"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 3l1.5 3.5L17 8l-3 2.5.5 4L12 13l-2.5 1.5.5-4L7 8l3.5-1.5z"/><path d="M5 19a7 7 0 0114 0"/></svg></div><h3>Cybersecurity</h3><p>Protect your data with security audits, penetration testing, compliance frameworks, and incident response planning.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ZPL -->
+<section id="zpl">
+  <div class="container">
+    <div class="zpl-layout">
+      <div class="zpl-left reveal">
+        <div class="section-eyebrow">Our Signature Process</div>
+        <h2 class="section-heading">The Zion Production Line&trade;</h2>
+        <p class="section-sub">Our proprietary development methodology — the <strong style="color:var(--gold)">ZPL</strong> — is what sets us apart. A battle-tested, phase-gated operating framework that brings order, excellence, and accountability to every build.</p>
+        <div class="zpl-highlight"><p>Think of it as a production line where <strong>every station has a purpose</strong>, every handoff is intentional, and the final product reflects the standard of the Kingdom. Nothing ships without passing through our quality gate.</p></div>
+        <div class="zpl-metrics">
+          <div class="metric reveal reveal-d1"><div class="metric-val">5</div><div class="metric-label">Core Phases</div></div>
+          <div class="metric reveal reveal-d2"><div class="metric-val">98%</div><div class="metric-label">On-Time Rate</div></div>
+          <div class="metric reveal reveal-d3"><div class="metric-val">0</div><div class="metric-label">Shortcuts Taken</div></div>
+        </div>
+      </div>
+      <div class="zpl-phases">
+        <div class="phase reveal"><div class="phase-num">I</div><div><h4>Discover &amp; Define</h4><p>Deep-dive into your mission, stakeholders, and goals. We map the full vision before writing a single line of code.</p></div></div>
+        <div class="phase reveal reveal-d1"><div class="phase-num">II</div><div><h4>Architect &amp; Blueprint</h4><p>System design, technology selection, and structural planning with full transparency and client sign-off.</p></div></div>
+        <div class="phase reveal reveal-d2"><div class="phase-num">III</div><div><h4>Build &amp; Iterate</h4><p>Sprint-based development with continuous feedback. You see progress every week, not just at the end.</p></div></div>
+        <div class="phase reveal reveal-d3"><div class="phase-num">IV</div><div><h4>Test &amp; Refine</h4><p>Rigorous QA, security review, and performance testing. Nothing passes the gate unless it meets the standard.</p></div></div>
+        <div class="phase reveal reveal-d4"><div class="phase-num">V</div><div><h4>Launch &amp; Sustain</h4><p>Deployment, monitoring, and ongoing support. We don't just hand off — we walk beside you post-launch.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="container">
+    <div class="portfolio-header reveal">
+      <div class="section-eyebrow">Our Work</div>
+      <h2 class="section-heading">Projects Built on Purpose</h2>
+      <p class="section-sub">Systems we've built for organizations doing Kingdom work across multiple sectors.</p>
+    </div>
+    <div class="portfolio-grid">
+      <div class="folio featured reveal">
+        <div class="folio-thumb"><div class="folio-thumb-inner"><div class="folio-thumb-pattern"></div><span class="folio-monogram">J.NET</span></div></div>
+        <div class="folio-body"><div class="folio-tags"><span class="tag">Web Platform</span><span class="tag">Ministry Tech</span><span class="tag">Multi-Tool</span></div><h3>Jesus.Net Philippines — Digital Ministry Portal</h3><p>A full-scale digital missions portal featuring pathway-based navigation for individuals, churches, and Bible study leaders. Integrates free tools including daily devotionals, interactive Bible study companions, and film streaming — reaching millions across 160+ countries.</p><a href="https://jesus.net.ph" target="_blank" class="folio-link">Visit Project <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      </div>
+      <div class="folio reveal">
+        <div class="folio-thumb"><div class="folio-thumb-inner"><div class="folio-thumb-pattern"></div><span class="folio-monogram">TV</span></div></div>
+        <div class="folio-body"><div class="folio-tags"><span class="tag">Web App</span><span class="tag">Mobile App</span><span class="tag">Video Platform</span></div><h3>Turn Vertical — Digital Evangelism Platform</h3><p>Website and mobile app empowering believers to record testimonies, share Gospel videos via QR codes and links, and track engagement with built-in follow-up alerts — purpose-built for Gen Z personal evangelism.</p><a href="https://turnvertical.org" target="_blank" class="folio-link">Visit Project <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      </div>
+      <div class="folio reveal reveal-d1">
+        <div class="folio-thumb"><div class="folio-thumb-inner"><div class="folio-thumb-pattern"></div><span class="folio-monogram">HB</span></div></div>
+        <div class="folio-body"><div class="folio-tags"><span class="tag">Ministry Website</span><span class="tag">Booking System</span></div><h3>HopeBegins.Today — Faith-Based Mental Health</h3><p>A ministry website for a faith-driven mental health coaching program combining Christian principles with technology. Features session booking, the H.O.P.E. coaching framework, and testimonial-driven design that converts visitors into participants.</p><a href="https://hopebegins.today" target="_blank" class="folio-link">Visit Project <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      </div>
+      <div class="folio reveal">
+        <div class="folio-thumb"><div class="folio-thumb-inner"><div class="folio-thumb-pattern"></div><span class="folio-monogram">GB</span></div></div>
+        <div class="folio-body"><div class="folio-tags"><span class="tag">Systems Integration</span><span class="tag">Enterprise</span></div><h3>Glassbox Philippines — Systems Integration</h3><p>End-to-end systems integration for an architectural finishes company, connecting inventory management, customer ordering workflows, and operational reporting into a unified platform that streamlined their business processes.</p></div>
+      </div>
+      <div class="folio reveal reveal-d1">
+        <div class="folio-thumb"><div class="folio-thumb-inner"><div class="folio-thumb-pattern"></div><span class="folio-monogram">HED</span></div></div>
+        <div class="folio-body"><div class="folio-tags"><span class="tag">Landing Page</span><span class="tag">UI/UX</span></div><h3>Himala Every Day — Devotional Landing Page</h3><p>A beautifully crafted landing page for a daily devotional ministry reaching readers in 25+ languages. Designed to convert visitors into subscribers with compelling storytelling, social proof, and a frictionless signup experience.</p><a href="https://himalaeveryday.ph" target="_blank" class="folio-link">Visit Project <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      </div>
+      <div class="folio reveal reveal-d2">
+        <div class="folio-thumb"><div class="folio-thumb-inner"><div class="folio-thumb-pattern"></div><span class="folio-monogram">eSF</span></div></div>
+        <div class="folio-body"><div class="folio-tags"><span class="tag">Impact Reporting</span><span class="tag">Missions Data</span></div><h3>eSTAR Foundation — Ministry Impact Reporting</h3><p>A missions-focused reporting platform for a Thailand-based foundation, featuring the Harvest database that maps churches and unreached communities — empowering strategic partnerships to bring the Gospel to every village.</p><a href="https://www.estar.ws/" target="_blank" class="folio-link">Visit Project <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-left reveal">
+        <div class="section-eyebrow">Who We Are</div>
+        <h2 class="section-heading">Built to Build for <span style="color:var(--gold)">the Kingdom</span></h2>
+        <p class="section-sub">Zion Systems and Build was founded on a simple conviction: that technology should serve a purpose higher than profit. We are engineers, designers, and strategists who believe Kingdom organizations deserve world-class technology — and the operational excellence to back it up.</p>
+        <p class="section-sub" style="margin-top:0.85rem">We don't cut corners. We don't ship half-built. Every project runs through our Zion Production Line because the standard of our work reflects the standard of our calling.</p>
+        <div class="about-quote"><p>"Whatever you do, work at it with all your heart, as working for the Lord."</p><cite>— Colossians 3:23</cite></div>
+      </div>
+      <div class="reveal reveal-d2">
+        <div class="values-title">Our Core Values</div>
+        <div class="values-sub">The operating principles behind every decision we make.</div>
+        <div class="values-list">
+          <div class="value-item"><div class="value-icon"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9 9,9"/></svg></div><div><h4>Excellence Without Exception</h4><p>Every deliverable meets the ZPL standard. We treat every project as the most important thing we'll ever build.</p></div></div>
+          <div class="value-item"><div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 21C12 21 4 14 4 9.5A5 5 0 0112 6a5 5 0 018 3.5C20 14 12 21 12 21z"/></svg></div><div><h4>Service Above Self</h4><p>We exist to serve mission-driven organizations. Your success is our purpose — not the other way around.</p></div></div>
+          <div class="value-item"><div class="value-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5M12 15v1"/></svg></div><div><h4>Radical Transparency</h4><p>No black boxes. You see everything — timelines, decisions, trade-offs. Trust is built on visibility.</p></div></div>
+          <div class="value-item"><div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8c3-2 5-3 7-3s4 1 7 3M5 16c3 2 5 3 7 3s4-1 7-3"/></svg></div><div><h4>Stewardship of Technology</h4><p>We build systems that are sustainable, scalable, and responsible — because the mission outlasts any single project.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-header reveal">
+      <div class="section-eyebrow">Let's Talk</div>
+      <h2 class="section-heading">Ready to Build Something That Matters?</h2>
+      <p class="section-sub">Whether starting from scratch or scaling an existing system, we'd love to hear about your vision.</p>
+    </div>
+    <div class="contact-layout">
+      <div class="contact-info reveal">
+        <div class="c-item"><div class="c-item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4l10 8 10-8"/></svg></div><div><h4>Email</h4><p>hello@zionsystems.build</p></div></div>
+        <div class="c-item"><div class="c-item-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.12 10.8 19.79 19.79 0 010 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L5.91 7.5a16 16 0 006.59 6.59l1.32-1.32a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0122 16.92z"/></svg></div><div><h4>Phone</h4><p>+1 (555) 012-3456</p></div></div>
+        <div class="c-item"><div class="c-item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 7 8 11.7z"/></svg></div><div><h4>Location</h4><p>Remote-first, Kingdom-wide</p></div></div>
+        <div class="c-note"><p><strong>Response Time:</strong> We typically respond within 24 hours. For urgent infrastructure needs, mention it in your message and we'll prioritize.</p></div>
+      </div>
+      <div class="contact-form reveal reveal-d2">
+        <div class="form-row">
+          <div class="fg"><label>Name</label><input type="text" placeholder="Your full name"></div>
+          <div class="fg"><label>Organization</label><input type="text" placeholder="Your organization"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Email</label><input type="email" placeholder="you@organization.com"></div>
+          <div class="fg"><label>Your Role</label><select id="roleSelect"><option value="">Select your position</option><option value="owner">Owner / Founder</option><option value="executive">C-Suite / Executive</option><option value="director">Director</option><option value="manager">Manager</option><option value="other">Other</option></select></div>
+        </div>
+        <!-- Executive offer banner -->
+        <div class="exec-offer" id="execOffer">
+          <div class="exec-offer-inner">
+            <div class="exec-offer-badge">EXCLUSIVE OFFER</div>
+            <div class="exec-offer-content">
+              <h4>Claim Your Free Executive Discovery Call</h4>
+              <p>As a leader, you qualify for a <strong>complimentary 2-hour executive discovery &amp; consultation session</strong> with our seasoned Christian tech leaders — a session normally valued at <span class="exec-offer-price">$1,100</span>. We'll audit your current tech landscape, identify high-impact opportunities, and map a clear path forward — no strings attached.</p>
+              <label class="exec-offer-check"><input type="checkbox" id="claimOffer"> Yes, I'd like to claim my free discovery call</label>
+            </div>
+          </div>
+        </div>
+        <div class="fg"><label>Service Needed</label><select><option value="">Select a service</option><option>Custom Software Development</option><option>Infrastructure &amp; DevOps</option><option>Technology Consulting</option><option>Managed IT Services</option><option>UI/UX &amp; Product Design</option><option>Cybersecurity &amp; Compliance</option><option>Other</option></select></div>
+        <div class="fg"><label>Project Details</label><textarea placeholder="Share your vision, timeline, and any details that help us understand your needs..."></textarea></div>
+        <button class="form-submit">Send Message &rarr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+        <rect x="1.5" y="1.5" width="37" height="37" rx="8" stroke="#A8832E" stroke-width="1.2" fill="none"/>
+        <path d="M12 28L20 10L28 28" stroke="#A8832E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <line x1="14.5" y1="23" x2="25.5" y2="23" stroke="#A8832E" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="20" cy="9" r="1.2" fill="#A8832E"/>
+      </svg>
+      <div class="footer-brand">Zion <span>Systems &amp; Build</span></div>
+    </div>
+    <div class="footer-center">
+      <a data-scroll="hero">Home</a>
+      <a data-scroll="services">Services</a>
+      <a data-scroll="zpl">ZPL</a>
+      <a data-scroll="portfolio">Portfolio</a>
+      <a data-scroll="about">About</a>
+      <a data-scroll="contact">Contact</a>
+    </div>
+    <div class="footer-right">&copy; 2026 Zion Systems and Build</div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // Scroll navigation — all [data-scroll] elements
+  document.querySelectorAll('[data-scroll]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.getElementById(el.dataset.scroll);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Scroll spy
+  const nav = document.getElementById('nav');
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  const desktopLinks = document.querySelectorAll('.nav-links .nav-link');
+  const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+  function onScroll() {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    let currentId = 'hero';
+    const scrollY = window.scrollY + 150;
+    for (const section of sections) {
+      if (scrollY >= section.offsetTop) currentId = section.id;
+    }
+    desktopLinks.forEach(a => a.classList.toggle('active', a.dataset.scroll === currentId));
+    mobileLinks.forEach(a => a.classList.toggle('active', a.dataset.scroll === currentId));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Executive offer — show for leadership roles
+  const roleSelect = document.getElementById('roleSelect');
+  const execOffer = document.getElementById('execOffer');
+  const leaderRoles = ['owner', 'executive', 'director'];
+  roleSelect.addEventListener('change', () => {
+    if (leaderRoles.includes(roleSelect.value)) {
+      execOffer.classList.add('show');
+    } else {
+      execOffer.classList.remove('show');
+      document.getElementById('claimOffer').checked = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
