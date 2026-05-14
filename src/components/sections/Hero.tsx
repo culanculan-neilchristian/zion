@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
+import { SpiralAnimation } from "@/components/ui/spiral-animation";
 
 export function Hero() {
   const terminalSteps = [
@@ -21,6 +22,12 @@ export function Hero() {
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-radial-[circle,rgba(205,162,70,0.07)_0%,transparent_70%] blur-[100px]" />
         <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-radial-[circle,rgba(205,162,70,0.04)_0%,transparent_70%] blur-[100px]" />
+        
+        {/* Spiral Animation Background */}
+        <div className="absolute inset-0 opacity-[0.4] mix-blend-screen">
+          <SpiralAnimation />
+        </div>
+        
         <div className="hero-grid absolute inset-0" />
       </div>
 

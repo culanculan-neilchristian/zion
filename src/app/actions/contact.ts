@@ -27,7 +27,7 @@ export async function sendContactEmail(data: {
 
   // ---- Environment -------------------------------------------------------
   const BREVO_API_KEY = process.env.BREVO_API_KEY;
-  const RECEIVER_EMAIL = "maricmarfil@gmail.com"; // Updated test email
+  const RECEIVER_EMAIL = process.env.CONTACT_FORM_RECEIVER_EMAIL || "culanculan.neilchristian@gmail.com";
   const ADMIN_EMAILS = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',').map(e => e.trim()).filter(Boolean) : [];
 
   console.log("📧 Attempting to send email to:", [RECEIVER_EMAIL, ...ADMIN_EMAILS]);
