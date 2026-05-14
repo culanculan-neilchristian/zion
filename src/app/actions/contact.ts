@@ -25,6 +25,7 @@ export async function sendContactEmail(data: {
 
   const { fullName, email, organizationType, message } = validated.data;
 
+  
   // ---- Environment -------------------------------------------------------
   const BREVO_API_KEY = process.env.BREVO_API_KEY;
   const RECEIVER_EMAIL = process.env.CONTACT_FORM_RECEIVER_EMAIL || "culanculan.neilchristian@gmail.com";
