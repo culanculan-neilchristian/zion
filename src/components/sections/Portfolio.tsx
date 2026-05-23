@@ -2,13 +2,25 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, X, ExternalLink, Maximize2 } from "lucide-react";
+import { ArrowRight, X, ExternalLink, Maximize2, Apple } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 const CATEGORIES = ["All", "Ministry", "Web & Mobile", "Enterprise"];
 
-const PROJECTS = [
+interface ProjectType {
+  title: string;
+  desc: string;
+  tags: string[];
+  monogram: string;
+  link?: string;
+  appStore?: string;
+  featured?: boolean;
+  category: string;
+  image?: string;
+}
+
+const PROJECTS: ProjectType[] = [
   {
     title: "Jesus.Net Philippines — Digital Ministry Portal",
     desc: "A full-scale digital missions portal featuring pathway-based navigation for individuals, churches, and Bible study leaders. Reach millions across 160+ countries.",
@@ -24,9 +36,9 @@ const PROJECTS = [
     desc: "Website and mobile app empowering believers to record testimonies and share Gospel videos via QR codes and links.",
     tags: ["Web App", "Mobile App", "Video Platform"],
     monogram: "TV",
-    link: "https://turnvertical.org",
+    appStore: "https://apps.apple.com/my/app/turn-vertical/id6758944157",
     category: "Web & Mobile",
-    image: "/images/turn-vertical-site.png",
+    image: "/images/turn-vertical-siteB.jpg",
   },
   {
     title: "HopeBegins.Today — Faith-Based Mental Health",
@@ -64,8 +76,6 @@ const PROJECTS = [
     image: "/images/estar-site.jpg",
   },
 ];
-
-type ProjectType = typeof PROJECTS[number];
 
 export function Portfolio() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -233,6 +243,18 @@ export function Portfolio() {
                       </a>
                     )}
                     
+                    {project.appStore && (
+                      <a
+                        href={project.appStore}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-[0.78rem] font-semibold text-gold tracking-wide no-underline group/link"
+                      >
+                        App Store 
+                        <ArrowRight size={14} className="transition-all duration-300 group-hover/link:translate-x-1" />
+                      </a>
+                    )}
+                    
                     <button
                       onClick={() => setSelectedProject(project)}
                       className="inline-flex items-center gap-1.5 text-[0.78rem] font-medium text-gray-400 hover:text-white transition-colors duration-300 cursor-pointer"
@@ -327,6 +349,19 @@ export function Portfolio() {
                       className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 bg-gold hover:bg-gold-light text-gray-950 font-semibold rounded-lg text-[0.82rem] transition-all duration-300 hover:shadow-[0_4px_20px_rgba(205,162,70,0.2)] group/btn"
                     >
                       Visit Live Website
+                      <ExternalLink size={14} className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                    </a>
+                  )}
+
+                  {selectedProject.appStore && (
+                    <a
+                      href={selectedProject.appStore}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 bg-black hover:bg-zinc-900 text-white font-semibold rounded-lg text-[0.82rem] transition-all duration-300 border border-zinc-800 hover:border-zinc-700 hover:shadow-[0_4px_20px_rgba(0,0,0,0.3)] group/btn cursor-pointer"
+                    >
+                      <Apple size={14} className="fill-white text-white" />
+                      Download on App Store
                       <ExternalLink size={14} className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                     </a>
                   )}
