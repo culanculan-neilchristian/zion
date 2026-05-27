@@ -48,11 +48,15 @@ export function Hero() {
             IT development and servicing for organizations building awesome things for the Kingdom. Our production-grade systems and processes ensure your technology serves the mission it was made for.
           </p>
           <div className="flex flex-wrap gap-3.5">
-            <Button variant="gold" className="group">
-              Explore Our Process
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button variant="ghost">Start a Conversation</Button>
+            <a href="#zpl" className="no-underline">
+              <Button variant="gold" className="group">
+                Explore Our Process
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </Button>
+            </a>
+            <a href="#contact" className="no-underline">
+              <Button variant="ghost">Start a Conversation</Button>
+            </a>
           </div>
 
           <div className="mt-14 pt-8 border-t border-solid border-gray-800">

@@ -125,7 +125,7 @@ export function Portfolio() {
             Projects Built on Purpose
           </h2>
           <p className="text-[1rem] leading-[1.7] text-gray-400 font-light max-w-[560px]">
-            Systems we've built for organizations doing Kingdom work across multiple sectors.
+            Systems we&apos;ve built for organizations doing Kingdom work across multiple sectors.
           </p>
         </motion.div>
 
@@ -158,7 +158,7 @@ export function Portfolio() {
         {/* Grid Container */}
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, idx) => {
+            {filteredProjects.map((project) => {
               return (
                 <motion.div
                   key={project.title}

@@ -19,7 +19,7 @@
   --color-gray-200: #D5D5E4;
   --color-gray-100: #EDEDF4;
 
-  --font-display: "Cormorant Garamond", serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", serif;
   --font-body: var(--font-outfit);
   --font-mono: var(--font-jetbrains);
 
@@ -51,7 +51,7 @@
   --nav-height: 72px;
   
   /* Fallback to ensure font is available before Next.js hydration */
-  --font-display: "Cormorant Garamond", serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", serif;
 }
 
 body {

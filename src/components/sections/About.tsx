@@ -47,12 +47,12 @@ export function About() {
               Driven by Values, Guided by Vision.
             </h2>
             <p className="text-[1rem] leading-[1.7] text-gray-400 font-light mb-8">
-              Zion Systems & Build was founded on the belief that the organizations doing the most important work in the world should have access to the best technology. We aren't just a service provider — we are a partner in your mission.
+              Zion Systems & Build was founded on the belief that the organizations doing the most important work in the world should have access to the best technology. We aren&apos;t just a service provider — we are a partner in your mission.
             </p>
             
             <div className="p-7 bg-gold/4 border-l-4 border-solid border-gold rounded-r-xl">
               <p className="font-display text-[1.15rem] italic text-gray-200 leading-[1.55]">
-                "Our goal is to remove the technical barriers that hinder Kingdom-focused organizations from reaching their full potential. We build the frameworks so you can focus on the fruit."
+                &ldquo;Our goal is to remove the technical barriers that hinder Kingdom-focused organizations from reaching their full potential. We build the frameworks so you can focus on the fruit.&rdquo;
               </p>
               <cite className="block mt-3 text-[0.78rem] font-medium text-gold not-italic uppercase tracking-wide">
                 — Founding Vision, Zion Systems

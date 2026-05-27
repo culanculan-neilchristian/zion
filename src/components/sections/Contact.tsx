@@ -65,7 +65,7 @@ export function Contact() {
             Start a Conversation
           </h2>
           <p className="text-[1rem] leading-[1.7] text-gray-400 font-light max-w-[560px] mx-auto">
-            Ready to build something with purpose? We're here to help you navigate the technical landscape and build the frameworks your mission needs.
+            Ready to build something with purpose? We&apos;re here to help you navigate the technical landscape and build the frameworks your mission needs.
           </p>
         </motion.div>
 
@@ -95,7 +95,7 @@ export function Contact() {
 
             <div className="mt-2 p-5 bg-gold/4 border border-solid border-gold/10 rounded-xl">
               <p className="text-[0.82rem] leading-[1.6] text-gray-400 font-light">
-                <strong>Response Time:</strong> We typically respond to new inquiries within 24 business hours. We're looking forward to hearing about your vision.
+                <strong>Response Time:</strong> We typically respond to new inquiries within 24 business hours. We&apos;re looking forward to hearing about your vision.
               </p>
             </div>
           </motion.div>
@@ -110,7 +110,7 @@ export function Contact() {
             <AnimatePresence mode="wait">
               {status === "success" ? (
                 <motion.div 
-                  key="success"
+                   key="success"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
@@ -121,7 +121,7 @@ export function Contact() {
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-3">Message Sent!</h3>
                   <p className="text-gray-400 font-light max-w-sm mb-8">
-                    Thank you for reaching out. We've received your inquiry and will get back to you shortly.
+                    Thank you for reaching out. We&apos;ve received your inquiry and will get back to you shortly.
                   </p>
                   <Button variant="outline" onClick={() => setStatus("idle")}>
                     Send Another Message

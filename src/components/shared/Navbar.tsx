@@ -122,7 +122,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "fixed top-[72px] left-0 right-0 bottom-0 bg-gray-950/97 backdrop-blur-[30px] z-[49] flex flex-col p-8 transition-all duration-400 ease-out-expo md:hidden",
+          "fixed top-[72px] left-0 right-0 bottom-0 bg-gray-950/98 backdrop-blur-[30px] z-50 flex flex-col p-8 transition-all duration-400 ease-out-expo md:hidden",
           isMenuOpen ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none -translate-y-[10px]"
         )}
       >
