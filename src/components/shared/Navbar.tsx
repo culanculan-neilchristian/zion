@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 
@@ -47,36 +48,14 @@ export function Navbar() {
         )}
       >
         <a href="#hero" className="flex items-center gap-3.5 group no-underline">
-          <svg viewBox="0 0 40 40" className="w-10 h-10 shrink-0">
-            <rect
-              x="1.5"
-              y="1.5"
-              width="37"
-              height="37"
-              rx="8"
-              className="stroke-gold stroke-[1.5] fill-none"
-            />
-            <rect
-              x="4"
-              y="4"
-              width="32"
-              height="32"
-              rx="6"
-              className="fill-gold/6"
-            />
-            <path
-              d="M12 28L20 10L28 28"
-              className="stroke-gold stroke-[2.2] stroke-round stroke-join fill-none"
-            />
-            <line
-              x1="14.5"
-              y1="23"
-              x2="25.5"
-              y2="23"
-              className="stroke-gold stroke-[1.8] stroke-round"
-            />
-            <circle cx="20" cy="9" r="1.5" className="fill-gold" />
-          </svg>
+          <Image
+            src="/logo.png"
+            alt=""
+            width={40}
+            height={40}
+            priority
+            className="w-10 h-10 shrink-0 object-contain"
+          />
           <div className="flex flex-col leading-none">
             <div className="font-display text-[1.25rem] font-bold text-white tracking-tight">
               Zion <span className="text-gold">Systems & Build</span>
